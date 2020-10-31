@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block container %}
+
+<main class="container mt-3">
+    <div class="row mt-5">
+      <div class="col-10 col-md-6 offset-1 offset-md-3 mb-3">
+        <form action="{{ url_for('re_booking', id_teacher=teacher.id, day=day, time=time) }}" class="card mb-3", method="post">
+          <div class="card-body text-center pt-5">
+            <img src="{{ teacher.picture }}" class="mb-3" width="95" alt="">
+            <h2 class="h5 card-title mt-2 mb-2">{{ teacher.name }}</h2>
+            <p class="my-1">Запись на пробный урок</p>
+            <p class="my-1">{{ days[day] }}, {{ time }}</p>
+          </div>
+          <hr>
+          <div class="card-body mx-3">
+              <div class="row">
+                {{ form.clientWeekday(class_="form-control", value=day) }}
+                {{ form.clientTime(class_="form-control", value=time) }}
+                {{ form.clientTeacher(class_="form-control", value=teacher.id) }}
+              </div>
+            {% for err in form.clientName.errors %}
+              <p class="error">{{ err }}</p>
+            {% endfor %}
+            {{ form.clientName.label(class_="mb-1 mt-2") }}
+            {{ form.clientName(class_="form-control") }}
+            {% for err in form.clientPhone.errors %}
+              <p class="error">{{ err }}</p>
+            {% endfor %}
+            {{ form.clientPhone.label(class_="mb-1 mt-2") }}
+            {{ form.clientPhone(class_="form-control") }}
+            {{ form.csrf_token }}
+            {{ form.submit(class_="btn btn-primary btn-block mt-4") }}
+          </div>
+        </form>
+      </div>
+    </div>
+</main>
+
+{% endblock %}
